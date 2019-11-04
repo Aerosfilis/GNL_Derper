@@ -3,6 +3,7 @@
 PATH_TEST="$(cd "$(dirname "$0")" && pwd -P)"
 
 exc 2> /dev/null
+shopt -s extglob
 
 source ${PATH_TEST}/srcs/variables.sh
 
@@ -37,9 +38,21 @@ do
 							echo "$0: no such file or directory: ${!i}"
 							exit
 						fi ;;
+		"-n")			OPT_NO_NORMINETTE=1 ;;
+		*)				PATH_PROJ=${!i}
+						if [ -d ${PATH_PROJ} ]
+						then
+							break
+						else
+							echo "${0}: cannot access '${PATH_PROJ}': No such directory"
+							exit
+						fi ;;
 	esac
 	i=$((i+1))
 done
+
+PROJ_NAME="get_next_line"
+PATH_SRCS="${PATH_TEST}/srcs/${PROJ_NAME}"
 
 source ${PATH_TEST}/srcs/colors.sh
 source ${PATH_TEST}/srcs/check_cheat.sh
@@ -49,6 +62,14 @@ source ${PATH_TEST}/srcs/check_norme.sh
 source ${PATH_TEST}/srcs/check_update.sh
 source ${PATH_TEST}/srcs/compil.sh
 
+if [ -e ${PATH_SRCS}/proj_conf.sh ]
+then
+	source ${PATH_SRCS}/proj_conf.sh
+else
+	printf "Cannot find grademe's project ${BOLD}${PROJ_NAME}${DEFAULT} config file.\n"
+	exit
+fi
+
 cd ${PATH_TEST}
 
 if [ ${OPT_UPDATE} -eq 1 ]
@@ -57,14 +78,12 @@ then
 	exit
 fi
 
-source ${PATH_TEST}/config.sh
-
 if [ -d ${PATH_TEST}/projdir ]
 then
 	rm -rf ${PATH_TEST}/projdir
 fi
 mkdir ${PATH_TEST}/projdir
-cp -R ${PATH_PROJ}/* ${PATH_TEST}/projdir
+cp -R ${PATH_PROJ}/!($(echo ${PATH_TEST} | rev | cut -d "/" -f 1 | rev)) ${PATH_TEST}/projdir
 PATH_PROJ=${PATH_TEST}/projdir
 
 init_deepthought()
@@ -87,7 +106,7 @@ init_deepthought()
 	clang --version >> ${PATH_DEEPTHOUGHT}/deepthought
 }
 
-clear
+#clear
 init_deepthought
 
 if [ -e ${PATH_PROJ}/Makefile ]
@@ -104,10 +123,12 @@ if [ ${OPT_NO_SEARCH} -eq 0 ]
 then
 	func_check_file
 fi
-#if [ ${OPT_NO_LIBRARY} -eq 0 ]
-#then
-#	func_compil
-#fi
+if [ ${OPT_NO_LIBRARY} -eq 0 ]
+then
+	func_compil
+fi
+
+test_func
 
 if [ -e ${PATH_TEST}/a.out ]
 then

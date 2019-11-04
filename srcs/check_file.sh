@@ -80,7 +80,7 @@ check_auteur()
 check_header()
 {
 	printf "Header file"
-	if [ -e ${PATH_PROJ}/${HEADER_DIR}/libft.h ]
+	if [ -e ${PATH_PROJ}/${HEADER_DIR}/${HEADER_FILE} ]
 	then
 		printf "\033[15GNorme\n"
 		printf "${COLOR_OK}found${DEFAULT}"
@@ -88,12 +88,12 @@ check_header()
 		then
 			printf "${DEFAULT}\033[15Gdisabled\n"
 		else
-			text="= libft.h"
+			text="= ${HEADER_FILE}"
 			printf "\n${text}" >> ${PATH_DEEPTHOUGHT}/deepthought
 			printf "%.s=" $(seq 1 $(( 80 - ${#text} ))) >> ${PATH_DEEPTHOUGHT}/deepthought
 			printf "\n" >> ${PATH_DEEPTHOUGHT}/deepthought
-			printf "$> norminette libft.h | grep -E '(Error|Warning)'\n" >> ${PATH_DEEPTHOUGHT}/deepthought
-			NORME_VAR=$(norminette ${PATH_PROJ}/libft.h 2>&1)
+			printf "$> norminette ${HEADER_FILE} | grep -E '(Error|Warning)'\n" >> ${PATH_DEEPTHOUGHT}/deepthought
+			NORME_VAR=$(norminette ${PATH_PROJ}/${HEADER_DIR}/${HEADER_FILE} 2>&1)
 			if echo "$NORME_VAR" | grep -q command
 			then
 				printf "${COLOR_WARNING}\033[15Gnot found${DEFAULT}\n"
@@ -113,15 +113,83 @@ check_header()
 	printf "\n"
 }
 
-func_check_file()
+sub_check_files()
 {
-	text="CHECKING FILES"
-	printf "${COLOR_TITLE}"
-	printf "%.s${CHAR_LENGTH}" $(seq 1 ${TITLE_LENGTH})
-	printf "\n${CHAR_WIDTH}\033[$(( (${TITLE_LENGTH} - ${#text}) / 2 ))G${text}\033[${TITLE_LENGTH}G${CHAR_WIDTH}\n"
-	printf "%.s${CHAR_LENGTH}" $(seq 1 ${TITLE_LENGTH})
-	printf "\n\n${DEFAULT}"
-	check_makefile
-	check_auteur
-	check_header
+	for file2 in ${1}/*
+	do
+		FILE2_NAME=$(echo $file2 | rev | cut -d "/" -f 1 | rev)
+		if [ -d file2 ]
+		then
+			sub_check_file ${file2}
+		elif [[ "$FILE2_NAME" == "${2}" || ${FOUND_FILES[index]} -eq 1 ]]
+		then
+			FOUND_FILES[$index]=1
+			break
+		fi
+	done
+}
+
+nb_file_recur()
+{
+	for file in ${1}/*
+	do
+		if [ -d $file ]
+		then
+			nb_file_recur ${file}
+		else
+			NB_FILE2=$((NB_FILE2 + 1))
+		fi
+	done
+}
+
+check_files()
+{
+	FOUND_FILE1=0
+	NB_FILE1=0
+	NB_FILE2=0
+	index=0
+	nb_file_recur ${PATH_PROJ}
+	for file1 in ${AUTHORIZED_FILES[@]}
+	do
+		NB_FILE1=$((NB_FILE1 + 1))
+		printf "$file1"
+		FOUND_FILES=0
+		sub_check_files ${PATH_PROJ} ${file1}
+		if [ ${FOUND_FILES[index]} -eq 1 ]
+		then
+			FOUND_FILE1=$((FOUND_FILE1    + 1))
+			printf "\e[40GNorme\n${COLOR_OK}found${DEFAULT}"
+			if [ $OPT_NO_NORMINETTE -eq 1 ]
+			then
+				printf "\e[40Gdisabled\n"
+			else
+				text="= ${file1}"
+				printf "\n${text}" >> ${PATH_DEEPTHOUGHT}/deepthought
+				printf "%.s=" $(seq 1 $(( 80 - ${#text} ))) >> ${PATH_DEEPTHOUGHT}/deepthought
+				printf "\n" >> ${PATH_DEEPTHOUGHT}/deepthought
+				printf "$> norminette ${file1} | grep -E '(Error|Warning)'\n" >> ${PATH_DEEPTHOUGHT}/deepthought
+				NORME_VAR=$(norminette ${file2} 2>&1)
+				if echo "$NORME_VAR" | grep -q command
+				then
+					printf "${COLOR_WARNING}\033[40Gnot found${DEFAULT}\n"
+					printf "norminette : command not found\n" >> ${PATH_DEEPTHOUGHT}/deepthought
+				elif echo "$NORME_VAR" | grep -qE '(Error|Warning)'
+				then
+					printf "${COLOR_KO}\033[15Gcheck failed${DEFAULT}\n"
+					echo "$NORME_VAR" | grep -E '(Error|Warning)' >> ${PATH_DEEPTHOUGHT}/deepthought
+					printf "Norme check failed\n" >> ${PATH_DEEPTHOUGHT}/deepthought
+				else
+					printf "${COLOR_OK}\033[15Gok${DEFAULT}\n\n"
+				fi
+			fi
+		else
+			printf "${COLOR_KO}\nnot found${DEFAULT}\n"
+		fi
+		printf "\n"
+		index=$((index + 1))
+	done
+	if [[ ${FOUND_FILE1} -ne ${NB_FILE2} && ${FOUND_FILE1} -ne ${NB_FILE1} ]]
+	then	
+		printf "${COLOR_KO}extra file found.${DEFAULT}\n"
+	fi
 }
