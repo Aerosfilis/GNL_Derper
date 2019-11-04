@@ -13,7 +13,7 @@ func_check_file()
 	text="CHECKING FILES"
 	printf "${COLOR_TITLE}"
 	printf "%.s${CHAR_LENGTH}" $(seq 1 ${TITLE_LENGTH})
-	printf "\n${CHAR_WIDTH}\033[$(( (${TITLE_LENGTH} - ${#text}) / 2 ))G${text}\033[${TITLE_LENGTH}G${CHAR_WIDTH}\n"
+	printf "\n${CHAR_WIDTH}\e[$(( (${TITLE_LENGTH} - ${#text}) / 2 ))G${text}\033[${TITLE_LENGTH}G${CHAR_WIDTH}\n"
 	printf "%.s${CHAR_LENGTH}" $(seq 1 ${TITLE_LENGTH})
 	printf "\n\n${DEFAULT}"
 	check_files
@@ -27,6 +27,7 @@ test_func()
 	printf "\n${CHAR_WIDTH}\e[$(( (${TITLE_LENGTH} - ${#text}) / 2 ))G${text}\e[${TITLE_LENGTH}G${CHAR_WIDTH}\n"
 	printf "%.s${CHAR_LENGTH}" $(seq 1 ${TITLE_LENGTH})
 	printf "\n\n${DEFAULT}"
-
-
+	
+	printf "${PURPLE}Part\e[20GCompil\e[20GTesti${DEFAULT}\n"
+	printf "Basic"
 }
