@@ -1,0 +1,82 @@
+srcs/get_next_line/files/text0
+srcs/get_next_line/files/textbonus
+
+1 | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+1 | Quisque vestibulum eros ut lectus rhoncus convallis.
+1 | Aenean porta tortor sit amet metus posuere, ac placerat purus auctor.
+1 | Sed et quam vitae augue sodales dapibus sit amet et dui.
+1 | Nulla pretium turpis sit amet justo hendrerit finibus.
+0 | 
+1 | 
+0 | 
+1 | Curabitur ac urna sed eros pellentesque scelerisque ut id risus.
+0 | 
+1 | Aenean nec ante dapidus, scelerisque dolor ut, rhoncus ipsum.
+0 | 
+0 | 
+0 | 
+
+srcs/get_next_line/files/text1
+srcs/get_next_line/files/textbonus
+
+1 | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+1 | Quisque vestibulum eros ut lectus rhoncus convallis.
+1 | Aenean porta tortor sit amet metus posuere, ac placerat purus auctor.
+1 | Sed et quam vitae augue sodales dapibus sit amet et dui.
+1 | Nulla pretium turpis sit amet justo hendrerit finibus.
+0 | 
+1 | 
+0 | 
+1 | Curabitur ac urna sed eros pellentesque scelerisque ut id risus.
+0 | 
+0 | Aenean nec ante dapidus, scelerisque dolor ut, rhoncus ipsum.
+0 | 
+
+srcs/get_next_line/files/text2
+srcs/get_next_line/files/textbonus
+
+0 | 
+1 | Quisque vestibulum eros ut lectus rhoncus convallis.
+0 | 
+1 | Sed et quam vitae augue sodales dapibus sit amet et dui.
+0 | 
+0 | 
+
+srcs/get_next_line/files/text3
+srcs/get_next_line/files/textbonus
+
+-1 | (null)
+1 | Quisque vestibulum eros ut lectus rhoncus convallis.
+-1 | (null)
+1 | Sed et quam vitae augue sodales dapibus sit amet et dui.
+-1 | (null)
+0 | 
+
+srcs/get_next_line/files/text4
+srcs/get_next_line/files/textbonus
+
+-1 | (null)
+1 | Quisque vestibulum eros ut lectus rhoncus convallis.
+-1 | (null)
+1 | Sed et quam vitae augue sodales dapibus sit amet et dui.
+-1 | (null)
+0 | 
+
+STDIN
+srcs/get_next_line/files/textbonus
+
+1 | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+1 | Quisque vestibulum eros ut lectus rhoncus convallis.
+1 | Aenean porta tortor sit amet metus posuere, ac placerat purus auctor.
+1 | Sed et quam vitae augue sodales dapibus sit amet et dui.
+1 | Nulla pretium turpis sit amet justo hendrerit finibus.
+0 | 
+1 | 
+0 | 
+1 | Curabitur ac urna sed eros pellentesque scelerisque ut id risus.
+0 | 
+1 | Aenean nec ante dapidus, scelerisque dolor ut, rhoncus ipsum.
+0 | 
+0 | 
+0 | 
+

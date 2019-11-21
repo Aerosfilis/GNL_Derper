@@ -1,0 +1,41 @@
+srcs/get_next_line/files/text0
+
+1 | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+1 | Aenean porta tortor sit amet metus posuere, ac placerat purus auctor.
+1 | Nulla pretium turpis sit amet justo hendrerit finibus.
+1 | 
+1 | Curabitur ac urna sed eros pellentesque scelerisque ut id risus.
+1 | Aenean nec ante dapidus, scelerisque dolor ut, rhoncus ipsum.
+0 | 
+
+srcs/get_next_line/files/text1
+
+1 | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+1 | Aenean porta tortor sit amet metus posuere, ac placerat purus auctor.
+1 | Nulla pretium turpis sit amet justo hendrerit finibus.
+1 | 
+1 | Curabitur ac urna sed eros pellentesque scelerisque ut id risus.
+0 | Aenean nec ante dapidus, scelerisque dolor ut, rhoncus ipsum.
+
+srcs/get_next_line/files/text2
+
+0 | 
+
+srcs/get_next_line/files/text3
+
+-1 | (null)
+
+srcs/get_next_line/files/text4
+
+-1 | (null)
+
+STDIN
+
+1 | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+1 | Aenean porta tortor sit amet metus posuere, ac placerat purus auctor.
+1 | Nulla pretium turpis sit amet justo hendrerit finibus.
+1 | 
+1 | Curabitur ac urna sed eros pellentesque scelerisque ut id risus.
+1 | Aenean nec ante dapidus, scelerisque dolor ut, rhoncus ipsum.
+0 | 
+

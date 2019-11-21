@@ -20,7 +20,7 @@ check_norme()
 	if echo "$NORME_VAR" | grep -q command
 	then
 		printf "${COLOR_WARNING}not found${DEFAULT}"
-		printf "\nnorminette : command not found\n\n" >>${PATH_DEEPTHOUGHT}/deepthought
+		printf "\nnorminette : command not found\n" >>${PATH_DEEPTHOUGHT}/deepthought
 		retvalue=1
 	elif echo "$NORME_VAR" | grep -qE '(Error|Warning)'
 	then

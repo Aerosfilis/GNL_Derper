@@ -133,7 +133,7 @@ nb_file_recur()
 {
 	for file in ${1}/*
 	do
-		if [ -d $file ]
+		if [ -d "$file" ]
 		then
 			nb_file_recur ${file}
 		else
@@ -153,7 +153,7 @@ check_files()
 	do
 		NB_FILE1=$((NB_FILE1 + 1))
 		printf "$file1"
-		FOUND_FILES=0
+		FOUND_FILES[$index]=0
 		sub_check_files ${PATH_PROJ} ${file1}
 		if [ ${FOUND_FILES[index]} -eq 1 ]
 		then
@@ -163,7 +163,7 @@ check_files()
 			then
 				printf "\e[40Gdisabled\n"
 			else
-				text="= ${file1}"
+				text="= ${file1} "
 				printf "\n${text}" >> ${PATH_DEEPTHOUGHT}/deepthought
 				printf "%.s=" $(seq 1 $(( 80 - ${#text} ))) >> ${PATH_DEEPTHOUGHT}/deepthought
 				printf "\n" >> ${PATH_DEEPTHOUGHT}/deepthought
@@ -186,10 +186,11 @@ check_files()
 			printf "${COLOR_KO}\nnot found${DEFAULT}\n"
 		fi
 		printf "\n"
+		printf "\n" >> ${PATH_DEEPTHOUGHT}/deepthought
 		index=$((index + 1))
 	done
-	if [[ ${FOUND_FILE1} -ne ${NB_FILE2} && ${FOUND_FILE1} -ne ${NB_FILE1} ]]
+	if [[ ${NB_FILE2} -ne ${NB_FILE1} ]]
 	then	
-		printf "${COLOR_KO}extra file found.${DEFAULT}\n"
+		printf "${COLOR_KO}extra file found.${DEFAULT}\n\n"
 	fi
 }
